@@ -19,6 +19,7 @@ string transactionType;
 string accountNum;
 string amount;
 string date;
+string time;
 string line;
 
 void curr() { // Valūtas aprēķināšana
@@ -112,7 +113,7 @@ void amountSub() { // Summa
     }
 
     amount.insert(10, string("."));
-    amount.erase(0, min(amount.find_first_not_of('0'), amount.size() - 1)); // функция удаления нулей перед суммой. Изучить как работает! 
+    amount.erase(0, min(amount.find_first_not_of('0'), amount.size() - 1)); // функция удаления нулей перед суммой.  
 
     cout << amount << endl;
 }
@@ -120,7 +121,6 @@ void amountSub() { // Summa
 void tDate() { // Data
 
     int i;
-    string date_new = "";
 
     for (int i = 34; i <= 35; i++) {
 
@@ -143,8 +143,19 @@ void tDate() { // Data
     cout << date << endl;
 }
 
+void tTime() { // Laiks
 
+    int i;
 
+    for (int i = 38; i < 42; i++) {
+
+        time += Mass[i];
+    }
+
+    time.insert(2, string(":"));
+
+    cout << time << endl;
+}
 
 void main()
 {
@@ -166,7 +177,7 @@ void main()
     accNum();
     amountSub();
     tDate();
-
+    tTime();
 
     // cout << fixed << Mass << endl;
     // cout << typeid(Mass).name() << endl;
