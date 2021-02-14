@@ -6,6 +6,7 @@
 #include <string> 
 #include <stdio.h>
 #include <algorithm>
+#include <windows.h>
 using namespace std;
 
 bool is_digits(const string& str) // Funkcija, kas izslēdz burtus un citas rakstzīmes, lasot datus no tastatūras.
@@ -21,6 +22,7 @@ string amount;
 string date;
 string transTime;
 string line;
+int Meh;
 
 void curr() { // Valūtas aprēķināšana
 
@@ -160,6 +162,9 @@ void tTime() { // Laiks
 
 void messageFile() { // message faila radīšana
 
+    SYSTEMTIME st;
+    GetLocalTime(&st);
+
     string path = "messageFile.xml";
 
     ofstream file;
@@ -171,14 +176,14 @@ void messageFile() { // message faila radīšana
         cout << "Unable to create file"<< endl;
     }
     else {
-        file << "<root>\n<msg-list>\n    <msg>"<< transactionType << " with card " << accountNum << " on " << date << " " << transTime << "," << endl;
-       
-
+        file << "<root>\n<msg-list>\n    <msg>"<< transactionType << " with card " << accountNum << " on " << date << " " << transTime << ",\n" << 
+          "amount " << amount << " " << currency << ".</msg>\n" << "</msg-list>\n" << "<totals cnt= '1' " << "sum='" << amount << "' " <<
+            "date='" << st.wYear << "." << st.wMonth << "." << st.wDay << " " << st.wHour << ":" << st.wMinute << ":" << st.wSecond << "'/>\n"<< "</root>" << endl;
     }
-
     file.close();
-    
 } 
+
+
 
 void main()
 {
@@ -202,7 +207,7 @@ void main()
     tDate();
     tTime();
     messageFile();
-
+    
 
     // cout << fixed << Mass << endl;
     // cout << typeid(Mass).name() << endl;
