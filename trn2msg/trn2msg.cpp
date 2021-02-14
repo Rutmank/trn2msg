@@ -35,7 +35,6 @@ void curr() { // Valūtas aprēķināšana
         while (getline(file, line)) {
 
             if (Mass[44] == '8' && Mass[45] == '4' && Mass[46] == '0' && line == "usd") {
-
                 currency = "usd";
                 logs = logs +"Currency value: usd\n";
                // cout << currency << endl;
