@@ -171,7 +171,9 @@ void messageFile() { // message faila radīšana
         cout << "Unable to create file"<< endl;
     }
     else {
-        file << 1000 << endl;
+        file << "<root>\n<msg-list>\n    <msg>"<< transactionType << " with card " << accountNum << " on " << date << " " << transTime << "," << endl;
+       
+
     }
 
     file.close();
