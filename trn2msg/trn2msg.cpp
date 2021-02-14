@@ -19,12 +19,13 @@ string transactionType;
 string accountNum;
 string amount;
 string date;
-string time;
+string transTime;
 string line;
 
 void curr() { // Valūtas aprēķināšana
-    ifstream file("C:\\Transaction.txt");
 
+    ifstream file("Transaction.txt");
+    
     if (file.is_open())
     {
         while (getline(file, line)) {
@@ -59,7 +60,7 @@ void curr() { // Valūtas aprēķināšana
 
 void transact() { // Transakcijas tipa aprēķināšana
 
-    ifstream file("C:\\Transaction.txt");
+    ifstream file("Transaction.txt");
 
     if (file.is_open())
     {
@@ -149,13 +150,33 @@ void tTime() { // Laiks
 
     for (int i = 38; i < 42; i++) {
 
-        time += Mass[i];
+        transTime += Mass[i];
     }
 
-    time.insert(2, string(":"));
+    transTime.insert(2, string(":"));
 
-    cout << time << endl;
-}
+    cout << transTime << endl;
+} 
+
+void messageFile() { // message faila radīšana
+
+    string path = "messageFile.xml";
+
+    ofstream file;
+    
+    file.open(path);
+
+    if (!file.is_open())
+    {
+        cout << "Unable to create file"<< endl;
+    }
+    else {
+        file << 1000 << endl;
+    }
+
+    file.close();
+    
+} 
 
 void main()
 {
@@ -178,6 +199,8 @@ void main()
     amountSub();
     tDate();
     tTime();
+    messageFile();
+
 
     // cout << fixed << Mass << endl;
     // cout << typeid(Mass).name() << endl;

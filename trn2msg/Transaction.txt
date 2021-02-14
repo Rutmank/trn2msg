@@ -1,0 +1,10 @@
+usd
+eur
+gbp
+rub
+purchase
+withdrawal
+Primary account number (PAN)
+Amount in submits
+Transaction time (yyyymmddhh24miss)
+Currency code in numeric format
