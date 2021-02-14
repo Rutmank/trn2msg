@@ -98,7 +98,7 @@ void transact() { // Transakcijas tipa aprēķināšana
 }
 
 void accNum() { // Akaunta numura aprēķināšana
-    
+
     int i;
 
     for (int i = 2; i < 18; i++) {
@@ -208,10 +208,18 @@ void logFile() {
     string month = to_string(b);
     int c = st.wDay;
     string day = to_string(c);
+    int d = st.wHour;
+    string hour = to_string(d);
+    int e = st.wMinute;
+    string minute = to_string(e);
+    int f = st.wSecond;
+    string second = to_string(f);
+    int g = st.wMilliseconds;
+    string milliseconds = to_string(g); 
 
     string address = "trn2msg" + year + month + day + ".log";
     ofstream file;
-    logs = logs + "Log file created\n";
+    logs = logs + hour + ":" + minute + ":" + second + ":" + milliseconds + " - Log file created\n";
 
     file.open(address);
 
