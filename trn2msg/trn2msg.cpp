@@ -177,8 +177,8 @@ void messageFile() { // message faila radīšana
     }
     else {
         file << "<root>\n<msg-list>\n    <msg>"<< transactionType << " with card " << accountNum << " on " << date << " " << transTime << ",\n" << 
-          "amount " << amount << " " << currency << ".</msg>\n" << "</msg-list>\n" << "<totals cnt= '1' " << "sum='" << amount << "' " <<
-            "date='" << st.wYear << "." << st.wMonth << "." << st.wDay << " " << st.wHour << ":" << st.wMinute << ":" << st.wSecond << "'/>\n"<< "</root>" << endl;
+          "amount " << amount << " " << currency << ".</msg>\n" << "</msg-list>\n" << "<totals cnt='1' " << "sum='" << amount << "' " <<
+            "date='" << st.wYear << ".0" << st.wMonth << "." << st.wDay << " " << st.wHour << ":" << st.wMinute << ":" << st.wSecond << "'/>\n"<< "</root>" << endl;
     }
     file.close();
 } 
@@ -206,7 +206,9 @@ void main()
     tTime();
     messageFile();
     
-
+    cout << "<root>\n<msg-list>\n    <msg>" << transactionType << " with card " << accountNum << " on " << date << " " << transTime << ",\n" <<
+        "amount " << amount << " " << currency << ".</msg>\n" << "</msg-list>\n" << "<totals cnt='1' " << "sum='" << amount << "' " <<
+        "date='" << st.wYear << ".0" << st.wMonth << "." << st.wDay << " " << st.wHour << ":" << st.wMinute << ":" << st.wSecond << "'/>\n" << "</root>" << endl;
     
     system("PAUSE");
 }
