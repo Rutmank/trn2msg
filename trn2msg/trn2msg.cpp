@@ -22,7 +22,8 @@ string amount;
 string date;
 string transTime;
 string line;
-int Meh;
+SYSTEMTIME st;
+
 
 void curr() { // Valūtas aprēķināšana
 
@@ -34,22 +35,22 @@ void curr() { // Valūtas aprēķināšana
 
             if (Mass[44] == '8' && Mass[45] == '4' && Mass[46] == '0' && line == "usd") {
                 currency = "usd";
-                cout << currency << endl;
+               // cout << currency << endl;
                 return;
             }
             else if (Mass[44] == '9' && Mass[45] == '7' && Mass[46] == '8' && line == "eur") {
                 currency = "eur";
-                cout << currency << endl;
+               // cout << currency << endl;
                 return;
             }
             else if (Mass[44] == '8' && Mass[45] == '2' && Mass[46] == '6' && line == "gbp") {
                 currency = "gbp";
-                cout << currency << endl;
+               // cout << currency << endl;
                 return;
             }
             else if (Mass[44] == '6' && Mass[45] == '4' && Mass[46] == '3' && line == "rub") {
                 currency = "rub";
-                cout << currency << endl;
+               // cout << currency << endl;
                 return;
             }
         }
@@ -70,12 +71,12 @@ void transact() { // Transakcijas tipa aprēķināšana
 
             if (Mass[0] == '0' && Mass[1] == '0' && line == "purchase") {
                 transactionType = "purchase";
-                cout << transactionType << endl;
+                // cout << transactionType << endl;
                 return;
             }
             else if (Mass[0] == '0' && Mass[1] == '1' && line == "withdrawal") {
                 transactionType = "withdrawal";
-                cout << transactionType << endl;
+               // cout << transactionType << endl;
                 return;
             }
         }
@@ -103,7 +104,7 @@ void accNum() { // Akaunta numura aprēķināšana
             || accountNum[i] == '6' || accountNum[i] == '7' || accountNum[i] == '8' || accountNum[i] == '9')
             accountNum[i] = '*';
     }
-    cout << accountNum << endl;
+   // cout << accountNum << endl;
 }
 
 void amountSub() { // Summa
@@ -118,7 +119,7 @@ void amountSub() { // Summa
     amount.insert(10, string("."));
     amount.erase(0, min(amount.find_first_not_of('0'), amount.size() - 1)); // функция удаления нулей перед суммой.  
 
-    cout << amount << endl;
+   // cout << amount << endl;
 }
 
 void tDate() { // Data
@@ -143,7 +144,7 @@ void tDate() { // Data
     date.insert(2, string("."));
     date.insert(5, string("."));
 
-    cout << date << endl;
+   // cout << date << endl;
 }
 
 void tTime() { // Laiks
@@ -157,12 +158,11 @@ void tTime() { // Laiks
 
     transTime.insert(2, string(":"));
 
-    cout << transTime << endl;
+   // cout << transTime << endl;
 } 
 
 void messageFile() { // message faila radīšana
 
-    SYSTEMTIME st;
     GetLocalTime(&st);
 
     string path = "messageFile.xml";
@@ -182,8 +182,6 @@ void messageFile() { // message faila radīšana
     }
     file.close();
 } 
-
-
 
 void main()
 {
@@ -209,8 +207,7 @@ void main()
     messageFile();
     
 
-    // cout << fixed << Mass << endl;
-    // cout << typeid(Mass).name() << endl;
+    
     system("PAUSE");
 }
 
