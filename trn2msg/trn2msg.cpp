@@ -7,6 +7,7 @@
 #include <stdio.h>
 #include <algorithm>
 #include <windows.h>
+
 using namespace std;
 
 bool is_digits(const string& str) // Funkcija, kas izslēdz burtus un citas rakstzīmes, lasot datus no tastatūras.
@@ -14,7 +15,7 @@ bool is_digits(const string& str) // Funkcija, kas izslēdz burtus un citas raks
     return all_of(str.begin(), str.end(), isdigit);
 }
 
-char Mass[255] = "";
+char Mass[255] = ""; // Global variables
 string currency;
 string transactionType;
 string accountNum;
@@ -22,8 +23,8 @@ string amount;
 string date;
 string transTime;
 string line;
+string logs;
 SYSTEMTIME st;
-
 
 void curr() { // Valūtas aprēķināšana
 
@@ -34,22 +35,27 @@ void curr() { // Valūtas aprēķināšana
         while (getline(file, line)) {
 
             if (Mass[44] == '8' && Mass[45] == '4' && Mass[46] == '0' && line == "usd") {
+
                 currency = "usd";
+                logs = logs +"Currency value: usd\n";
                // cout << currency << endl;
                 return;
             }
             else if (Mass[44] == '9' && Mass[45] == '7' && Mass[46] == '8' && line == "eur") {
                 currency = "eur";
+                logs = logs + "Currency value: eur\n";
                // cout << currency << endl;
                 return;
             }
             else if (Mass[44] == '8' && Mass[45] == '2' && Mass[46] == '6' && line == "gbp") {
                 currency = "gbp";
+                logs = logs + "Currency value: gbp\n";
                // cout << currency << endl;
                 return;
             }
             else if (Mass[44] == '6' && Mass[45] == '4' && Mass[46] == '3' && line == "rub") {
                 currency = "rub";
+                logs = logs + "Currency value: rub\n";
                // cout << currency << endl;
                 return;
             }
@@ -57,6 +63,7 @@ void curr() { // Valūtas aprēķināšana
     }
     else {
         cout << "Invalid file path" << endl;
+        logs = logs + "Invalid file path\n";
     }
     file.close();
 }
@@ -71,11 +78,13 @@ void transact() { // Transakcijas tipa aprēķināšana
 
             if (Mass[0] == '0' && Mass[1] == '0' && line == "purchase") {
                 transactionType = "purchase";
+                logs = logs + "Transaction type: purchase\n";
                 // cout << transactionType << endl;
                 return;
             }
             else if (Mass[0] == '0' && Mass[1] == '1' && line == "withdrawal") {
                 transactionType = "withdrawal";
+                logs = logs + "Transaction type: withdrawal\n";
                // cout << transactionType << endl;
                 return;
             }
@@ -83,6 +92,7 @@ void transact() { // Transakcijas tipa aprēķināšana
     }
     else {
         cout << "Invalid file path" << endl;
+        logs = logs + "Invalid file path\n";
     }
     file.close();
 }
@@ -104,6 +114,7 @@ void accNum() { // Akaunta numura aprēķināšana
             || accountNum[i] == '6' || accountNum[i] == '7' || accountNum[i] == '8' || accountNum[i] == '9')
             accountNum[i] = '*';
     }
+    logs = logs + "Account number: " + accountNum + "\n";
    // cout << accountNum << endl;
 }
 
@@ -119,6 +130,7 @@ void amountSub() { // Summa
     amount.insert(10, string("."));
     amount.erase(0, min(amount.find_first_not_of('0'), amount.size() - 1)); // функция удаления нулей перед суммой.  
 
+    logs = logs + "Amount value: " + amount + "\n";
    // cout << amount << endl;
 }
 
@@ -144,6 +156,8 @@ void tDate() { // Data
     date.insert(2, string("."));
     date.insert(5, string("."));
 
+    logs = logs + "Date value: " + date + "\n";
+
    // cout << date << endl;
 }
 
@@ -157,6 +171,8 @@ void tTime() { // Laiks
     }
 
     transTime.insert(2, string(":"));
+
+    logs = logs + "Transaction time: " + transTime + "\n";
 
    // cout << transTime << endl;
 } 
@@ -181,24 +197,27 @@ void messageFile() { // message faila radīšana
             "date='" << st.wYear << ".0" << st.wMonth << "." << st.wDay << " " << st.wHour << ":" << st.wMinute << ":" << st.wSecond << "'/>\n"<< "</root>" << endl;
     }
     file.close();
+    logs = logs + "Message file created\n";
 } 
 
 void logFile() {
 
-    int a = st.wYear;
+    int a = st.wYear; // Variables for date and time
     string year = to_string(a);
     int b = st.wMonth;
     string month = to_string(b);
     int c = st.wDay;
     string day = to_string(c);
 
-
     string address = "trn2msg" + year + month + day + ".log";
     ofstream file;
-
-    file << "Hallo!" << endl;
+    logs = logs + "Log file created\n";
 
     file.open(address);
+
+    file << logs << endl;
+
+    file.close();
 }
 
 void main()
@@ -206,6 +225,7 @@ void main()
     setlocale(LC_ALL, "");
 
     string counter;
+
     cin >> counter;
 
     if (is_digits(counter) == true && counter.size() == 47) { // Pārbaude ciparus
@@ -216,6 +236,8 @@ void main()
     }
     strcpy_s(Mass, counter.c_str());
 
+    logs = logs + "User entered transaction information\n";
+
     curr();
     transact();
     accNum();
@@ -223,12 +245,15 @@ void main()
     tDate();
     tTime();
     messageFile();
-    logFile();
     
     cout << "<root>\n<msg-list>\n    <msg>" << transactionType << " with card " << accountNum << " on " << date << " " << transTime << ",\n" <<
         "amount " << amount << " " << currency << ".</msg>\n" << "</msg-list>\n" << "<totals cnt='1' " << "sum='" << amount << "' " <<
         "date='" << st.wYear << ".0" << st.wMonth << "." << st.wDay << " " << st.wHour << ":" << st.wMinute << ":" << st.wSecond << "'/>\n" << "</root>" << endl;
     
+    logs = logs + "The user received information about the transaction\n";
+
+    logFile();
+
     system("PAUSE");
 }
 
