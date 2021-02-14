@@ -183,6 +183,24 @@ void messageFile() { // message faila radīšana
     file.close();
 } 
 
+void logFile() {
+
+    int a = st.wYear;
+    string year = to_string(a);
+    int b = st.wMonth;
+    string month = to_string(b);
+    int c = st.wDay;
+    string day = to_string(c);
+
+
+    string address = "trn2msg" + year + month + day + ".log";
+    ofstream file;
+
+    file << "Hallo!" << endl;
+
+    file.open(address);
+}
+
 void main()
 {
     setlocale(LC_ALL, "");
@@ -205,6 +223,7 @@ void main()
     tDate();
     tTime();
     messageFile();
+    logFile();
     
     cout << "<root>\n<msg-list>\n    <msg>" << transactionType << " with card " << accountNum << " on " << date << " " << transTime << ",\n" <<
         "amount " << amount << " " << currency << ".</msg>\n" << "</msg-list>\n" << "<totals cnt='1' " << "sum='" << amount << "' " <<
